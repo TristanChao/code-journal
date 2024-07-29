@@ -1,0 +1,10 @@
+header {
+  background-color: #4b2473;
+  color: white;
+}
+
+header > .container {
+  height: 80px;
+  display: flex;
+  align-items: center;
+}
