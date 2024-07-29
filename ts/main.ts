@@ -1,4 +1,4 @@
-/* global data */
+/* global data, writeData */
 
 const $entryForm = document.querySelector('#entry-form') as HTMLFormElement;
 const $entryImg = document.querySelector('#entry-img') as HTMLImageElement;

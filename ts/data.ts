@@ -1,5 +1,7 @@
 /* exported data, writeData */
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 interface Entry {
   title: string;
   photoUrl: string;
@@ -15,8 +17,6 @@ interface DataObject {
 }
 
 const data = readData();
-
-writeData();
 
 function writeData(): void {
   const dataJson = JSON.stringify(data);
