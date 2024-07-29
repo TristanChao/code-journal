@@ -8,9 +8,12 @@ body {
 }
 
 header > .container {
-  height: 80px;
-  display: flex;
-  align-items: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+header > .container > h1 {
+  margin: 10px 0;
 }
 
 input {
@@ -30,7 +33,6 @@ form textarea {
 }
 
 button {
-  margin: 10px 0.75rem;
   width: 60px;
   height: 30px;
   background-color: #4b2476;
