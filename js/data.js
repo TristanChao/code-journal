@@ -7,7 +7,8 @@ function writeData() {
   localStorage.setItem('entriesData', dataJson);
 }
 function readData() {
-  if (!localStorage.getItem('entriesData')) {
+  const dataJson = localStorage.getItem('entriesData');
+  if (!dataJson) {
     const dataDefault = {
       view: 'entry-form',
       entries: [],
@@ -16,7 +17,6 @@ function readData() {
     };
     return dataDefault;
   }
-  const dataJson = localStorage.getItem('entriesData');
   const dataObj = JSON.parse(dataJson);
   return dataObj;
 }
