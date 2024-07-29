@@ -3,8 +3,41 @@ header {
   color: white;
 }
 
+body {
+  background-color: #eee;
+}
+
 header > .container {
   height: 80px;
   display: flex;
   align-items: center;
+}
+
+input {
+  height: 30px;
+}
+
+textarea {
+  height: 100px;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  margin-top: 10px;
+  border-color: #b0b0b0;
+  border-radius: 5px;
+}
+
+button {
+  margin: 10px 0.75rem;
+  width: 60px;
+  height: 30px;
+  background-color: #4b2476;
+  color: white;
+  border-radius: 5px;
+}
+
+img {
+  width: 100%;
 }

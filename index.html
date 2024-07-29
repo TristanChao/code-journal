@@ -24,35 +24,43 @@
     <main class="container">
       <div data-view="entry-form">
         <h1>New Entry</h1>
-        <form>
-          <img
-            src="images/placeholder-image-square.jpg"
-            alt="image placeholder icon" />
-          <div id="title-input-container" class="column-full">
-            <div>
-              <label for="title-input">Title</label>
+        <form id="entry-form">
+          <div class="row">
+            <div id="img-container" class="column-half margin-top-10px">
+              <img
+                src="images/placeholder-image-square.jpg"
+                alt="image placeholder icon" />
             </div>
-            <div>
-              <input required name="title" id="title-input" />
+            <div id="title-and-photo-url-container" class="column-half">
+              <div id="title-input-container" class="margin-top-10px">
+                <div>
+                  <label for="title-input">Title</label>
+                </div>
+                <div>
+                  <input required name="title" id="title-input" />
+                </div>
+              </div>
+              <div id="photo-input-container" class="margin-top-10px">
+                <div>
+                  <label for="photo-url-input">Photo URL</label>
+                </div>
+                <div>
+                  <input required name="photo-url" id="photo-url-input" />
+                </div>
+              </div>
+            </div>
+            <div id="notes-container" class="column-full margin-top-10px">
+              <div>
+                <label for="notes-text-area">Notes</label>
+              </div>
+              <div>
+                <textarea required name="notes" id="notes-text-area"></textarea>
+              </div>
             </div>
           </div>
-          <div id="photo-input-container" class="column-full">
-            <div>
-              <label for="photo-url-input">Photo URL</label>
-            </div>
-            <div>
-              <input required name="photo-url" id="photo-url-input" />
-            </div>
+          <div class="row justify-end">
+            <button type="submit">SAVE</button>
           </div>
-          <div id="notes-container" class="column-full">
-            <div>
-              <label for="notes-text-area">Notes</label>
-            </div>
-            <div>
-              <textarea required name="notes" id="notes-text-area"></textarea>
-            </div>
-          </div>
-          <button type="submit">SAVE</button>
         </form>
       </div>
       <div data-view="entries" class="hidden"></div>

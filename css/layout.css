@@ -18,7 +18,7 @@
   width: 100%;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (width >= 768px) {
   .container {
     max-width: 900px;
   }
@@ -31,4 +31,12 @@
   .column-half {
     width: 50%;
   }
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.margin-top-10px {
+  margin-top: 15px;
 }
