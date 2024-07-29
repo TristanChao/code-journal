@@ -30,6 +30,7 @@ $entryForm.addEventListener('submit', (event) => {
   };
   data.nextEntryId++;
   data.entries.unshift(entryValues);
+  writeData();
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
 });
