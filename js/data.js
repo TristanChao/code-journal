@@ -1,7 +1,6 @@
 'use strict';
 /* exported data, writeData */
 const data = readData();
-writeData();
 function writeData() {
   const dataJson = JSON.stringify(data);
   localStorage.setItem('entriesData', dataJson);

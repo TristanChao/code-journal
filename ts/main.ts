@@ -9,14 +9,14 @@ const $photoUrlInput = document.querySelector(
 const $notesTextArea = document.querySelector(
   '#notes-text-area',
 ) as HTMLTextAreaElement;
-const $allEntriesDiv = document.querySelector('div[data-view="entries"]');
+const $allEntriesUl = document.querySelector('#entries-ul');
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
 if (!$photoUrlInput) throw new Error('$photoUrlInput query failed');
 if (!$notesTextArea) throw new Error('$notesTextArea query failed');
-if (!$allEntriesDiv) throw new Error('$allEntriesDiv query failed');
+if (!$allEntriesUl) throw new Error('$allEntriesDiv query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -80,6 +80,6 @@ function renderEntry(entry: Entry): HTMLLIElement {
 document.addEventListener('DOMContentLoaded', () => {
   for (let i = 0; i < data.entries.length; i++) {
     const $newEntry = renderEntry(data.entries[i]);
-    $allEntriesDiv.appendChild($newEntry);
+    $allEntriesUl.appendChild($newEntry);
   }
 });
