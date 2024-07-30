@@ -52,3 +52,8 @@ button {
 img {
   width: 100%;
 }
+
+#entries-ul {
+  list-style-type: none;
+  padding-left: 0;
+}
