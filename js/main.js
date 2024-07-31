@@ -10,6 +10,7 @@ const $noEntriesLi = document.querySelector('#no-entries-li');
 const $entryFormDiv = document.querySelector('div[data-view="entry-form"]');
 const $entriesDiv = document.querySelector('div[data-view="entries"]');
 const $entriesViewA = document.querySelector('#entries-view-a');
+const $newEntryA = document.querySelector('#new-entry-a');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -20,6 +21,7 @@ if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
 if (!$entryFormDiv) throw new Error('$entryFormDiv query failed');
 if (!$entriesDiv) throw new Error('$entriesDiv query failed');
 if (!$entriesViewA) throw new Error('$entriesViewA query failed');
+if (!$newEntryA) throw new Error('$newEntryA query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -102,4 +104,7 @@ function viewSwap(view) {
 }
 $entriesViewA.addEventListener('click', () => {
   viewSwap('entries');
+});
+$newEntryA.addEventListener('click', () => {
+  viewSwap('entry-form');
 });

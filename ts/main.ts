@@ -20,6 +20,7 @@ const $entriesDiv = document.querySelector(
 const $entriesViewA = document.querySelector(
   '#entries-view-a',
 ) as HTMLAnchorElement;
+const $newEntryA = document.querySelector('#new-entry-a') as HTMLAnchorElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -31,6 +32,7 @@ if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
 if (!$entryFormDiv) throw new Error('$entryFormDiv query failed');
 if (!$entriesDiv) throw new Error('$entriesDiv query failed');
 if (!$entriesViewA) throw new Error('$entriesViewA query failed');
+if (!$newEntryA) throw new Error('$newEntryA query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -130,4 +132,8 @@ function viewSwap(view: string): void {
 
 $entriesViewA.addEventListener('click', () => {
   viewSwap('entries');
+});
+
+$newEntryA.addEventListener('click', () => {
+  viewSwap('entry-form');
 });
