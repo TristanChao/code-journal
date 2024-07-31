@@ -41,8 +41,14 @@ $entryForm.addEventListener('submit', (event) => {
   data.nextEntryId++;
   data.entries.unshift(entryValues);
   writeData();
+  const $newEntry = renderEntry(entryValues);
+  $allEntriesUl.prepend($newEntry);
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
+  viewSwap('entries');
+  if (data.entries.length > 0) {
+    toggleNoEntries();
+  }
 });
 function renderEntry(entry) {
   const $entryLI = document.createElement('li');
@@ -81,7 +87,6 @@ function toggleNoEntries() {
     $noEntriesLi.className = 'hidden';
   }
 }
-toggleNoEntries();
 function viewSwap(view) {
   if (!$entryFormDiv) throw new Error('$entryFormDiv query failed');
   if (!$entriesDiv) throw new Error('$entriesDiv query failed');

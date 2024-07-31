@@ -9,11 +9,17 @@ const $photoUrlInput = document.querySelector(
 const $notesTextArea = document.querySelector(
   '#notes-text-area',
 ) as HTMLTextAreaElement;
-const $allEntriesUl = document.querySelector('#entries-ul');
-const $noEntriesLi = document.querySelector('#no-entries-li');
-const $entryFormDiv = document.querySelector('div[data-view="entry-form"]');
-const $entriesDiv = document.querySelector('div[data-view="entries"]');
-const $entriesViewA = document.querySelector('#entries-view-a');
+const $allEntriesUl = document.querySelector('#entries-ul') as HTMLUListElement;
+const $noEntriesLi = document.querySelector('#no-entries-li') as HTMLLIElement;
+const $entryFormDiv = document.querySelector(
+  'div[data-view="entry-form"]',
+) as HTMLDivElement;
+const $entriesDiv = document.querySelector(
+  'div[data-view="entries"]',
+) as HTMLDivElement;
+const $entriesViewA = document.querySelector(
+  '#entries-view-a',
+) as HTMLAnchorElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -49,8 +55,14 @@ $entryForm.addEventListener('submit', (event: Event) => {
   data.nextEntryId++;
   data.entries.unshift(entryValues);
   writeData();
+  const $newEntry = renderEntry(entryValues);
+  $allEntriesUl.prepend($newEntry);
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
+  viewSwap('entries');
+  if (data.entries.length > 0) {
+    toggleNoEntries();
+  }
 });
 
 function renderEntry(entry: Entry): HTMLLIElement {
@@ -100,8 +112,6 @@ function toggleNoEntries(): void {
     $noEntriesLi.className = 'hidden';
   }
 }
-
-toggleNoEntries();
 
 function viewSwap(view: string): void {
   if (!$entryFormDiv) throw new Error('$entryFormDiv query failed');
