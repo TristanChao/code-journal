@@ -13,7 +13,18 @@ header > .container {
 }
 
 header > .container > h1 {
-  margin: 10px 0;
+  margin: 10px 30px 10px 0;
+}
+
+header a {
+  font-size: 22px;
+  height: 22px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+header a:hover {
+  cursor: pointer;
 }
 
 input {
@@ -51,4 +62,26 @@ button {
 
 img {
   width: 100%;
+}
+
+#entries-ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+#new-entry-a {
+  background-color: #4b2476;
+  border-radius: 5px;
+  width: 80px;
+  height: 40px;
+  color: white;
+  text-align: center;
+  padding-top: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#new-entry-a:hover {
+  background-color: #33184f;
+  cursor: pointer;
 }

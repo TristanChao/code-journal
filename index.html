@@ -17,13 +17,14 @@
   </head>
   <body>
     <header>
-      <div class="container">
+      <div class="container row">
         <h1>Code Journal</h1>
+        <a id="entries-view-a">Entries</a>
       </div>
     </header>
     <main class="container">
       <div data-view="entry-form">
-        <h1>New Entry</h1>
+        <h1 class="column-full">New Entry</h1>
         <form id="entry-form">
           <div class="row">
             <div id="img-container" class="column-half mt-15">
@@ -59,12 +60,22 @@
               </div>
             </div>
           </div>
-          <div class="row justify-end mt-15 mg-15">
+          <div class="row column-full justify-end mt-15 mb-15">
             <button type="submit">SAVE</button>
           </div>
         </form>
       </div>
-      <div data-view="entries" class="hidden"></div>
+      <div data-view="entries" class="hidden">
+        <div id="entries-header" class="row justify-sb column-full">
+          <h1>Entries</h1>
+          <a id="new-entry-a">NEW</a>
+        </div>
+        <ul id="entries-ul">
+          <li id="no-entries-li" class="column-full row justify-center">
+            <h3>No entries have been recorded.</h3>
+          </li>
+        </ul>
+      </div>
     </main>
     <script src="js/data.js"></script>
     <script src="js/main.js"></script>

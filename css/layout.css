@@ -22,6 +22,14 @@
   justify-content: flex-end;
 }
 
+.justify-center {
+  justify-content: center;
+}
+
+.justify-sb {
+  justify-content: space-between;
+}
+
 .mt-15 {
   margin-top: 15px;
 }
