@@ -12,7 +12,7 @@ interface Entry {
 interface DataObject {
   view: string;
   entries: Entry[];
-  editing: null;
+  editing: null | Entry;
   nextEntryId: number;
 }
 
