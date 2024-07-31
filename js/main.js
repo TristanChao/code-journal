@@ -48,9 +48,7 @@ $entryForm.addEventListener('submit', (event) => {
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
   viewSwap('entries');
-  if (data.entries.length < 0) {
-    toggleNoEntries();
-  }
+  toggleNoEntries();
 });
 function renderEntry(entry) {
   const $entryLI = document.createElement('li');
@@ -81,9 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     $allEntriesUl.appendChild($newEntry);
   }
   viewSwap(data.view);
-  if (data.entries.length > 0) {
-    toggleNoEntries();
-  }
+  toggleNoEntries();
 });
 function toggleNoEntries() {
   if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
