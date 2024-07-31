@@ -62,3 +62,20 @@ img {
   list-style-type: none;
   padding-left: 0;
 }
+
+#new-entry-a {
+  background-color: #4b2476;
+  border-radius: 5px;
+  width: 80px;
+  height: 40px;
+  color: white;
+  text-align: center;
+  padding-top: 10px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+#new-entry-a:hover {
+  background-color: #33184f;
+  cursor: pointer;
+}
