@@ -62,7 +62,7 @@ $entryForm.addEventListener('submit', (event: Event) => {
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
   viewSwap('entries');
-  if (data.entries.length > 0) {
+  if (data.entries.length < 0) {
     toggleNoEntries();
   }
 });
@@ -112,10 +112,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function toggleNoEntries(): void {
   if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
-  if ($noEntriesLi.matches('.hidden')) {
-    $noEntriesLi.className = '';
-  } else {
+  if (data.entries.length > 0) {
     $noEntriesLi.className = 'hidden';
+  } else {
+    $noEntriesLi.className = '';
   }
 }
 
