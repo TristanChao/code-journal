@@ -67,6 +67,7 @@ $entryForm.addEventListener('submit', (event: Event) => {
 
 function renderEntry(entry: Entry): HTMLLIElement {
   const $entryLI = document.createElement('li');
+  $entryLI.setAttribute('data-entry-id', String(entry.entryId));
 
   const $rowDiv = document.createElement('div');
   $rowDiv.className = 'row';
@@ -81,8 +82,14 @@ function renderEntry(entry: Entry): HTMLLIElement {
   const $textDiv = document.createElement('div');
   $textDiv.className = 'column-half';
 
+  const $titleDiv = document.createElement('div');
+  $titleDiv.className = 'row justify-sb';
+
   const $titleH3 = document.createElement('h3');
   $titleH3.textContent = entry.title;
+
+  const $pencilIcon = document.createElement('i');
+  $pencilIcon.className = 'fa-solid fa-pencil';
 
   const $notesP = document.createElement('p');
   $notesP.textContent = entry.notes;
@@ -91,7 +98,9 @@ function renderEntry(entry: Entry): HTMLLIElement {
   $rowDiv.appendChild($imgDiv);
   $imgDiv.appendChild($entryImg);
   $rowDiv.appendChild($textDiv);
-  $textDiv.appendChild($titleH3);
+  $textDiv.appendChild($titleDiv);
+  $titleDiv.appendChild($titleH3);
+  $titleDiv.appendChild($pencilIcon);
   $textDiv.appendChild($notesP);
 
   return $entryLI;

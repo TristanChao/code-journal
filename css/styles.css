@@ -85,3 +85,14 @@ img {
   background-color: #33184f;
   cursor: pointer;
 }
+
+.fa-pencil {
+  height: 16px;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.fa-pencil:hover {
+  cursor: pointer;
+  color: #828282;
+}
