@@ -80,6 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const $newEntry = renderEntry(data.entries[i]);
     $allEntriesUl.appendChild($newEntry);
   }
+  viewSwap(data.view);
+  if (data.entries.length > 0) {
+    toggleNoEntries();
+  }
 });
 function toggleNoEntries() {
   if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
