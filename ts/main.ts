@@ -10,6 +10,7 @@ const $notesTextArea = document.querySelector(
   '#notes-text-area',
 ) as HTMLTextAreaElement;
 const $allEntriesUl = document.querySelector('#entries-ul');
+const $noEntriesLi = document.querySelector('#no-entries-li');
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -17,6 +18,7 @@ if (!$titleInput) throw new Error('$titleInput query failed');
 if (!$photoUrlInput) throw new Error('$photoUrlInput query failed');
 if (!$notesTextArea) throw new Error('$notesTextArea query failed');
 if (!$allEntriesUl) throw new Error('$allEntriesDiv query failed');
+if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -83,3 +85,14 @@ document.addEventListener('DOMContentLoaded', () => {
     $allEntriesUl.appendChild($newEntry);
   }
 });
+
+function toggleNoEntries(): void {
+  if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
+  if ($noEntriesLi.matches('.hidden')) {
+    $noEntriesLi.className = '';
+  } else {
+    $noEntriesLi.className = 'hidden';
+  }
+}
+
+toggleNoEntries();

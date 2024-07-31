@@ -6,12 +6,14 @@ const $titleInput = document.querySelector('#title-input');
 const $photoUrlInput = document.querySelector('#photo-url-input');
 const $notesTextArea = document.querySelector('#notes-text-area');
 const $allEntriesUl = document.querySelector('#entries-ul');
+const $noEntriesLi = document.querySelector('#no-entries-li');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
 if (!$photoUrlInput) throw new Error('$photoUrlInput query failed');
 if (!$notesTextArea) throw new Error('$notesTextArea query failed');
 if (!$allEntriesUl) throw new Error('$allEntriesDiv query failed');
+if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -65,3 +67,12 @@ document.addEventListener('DOMContentLoaded', () => {
     $allEntriesUl.appendChild($newEntry);
   }
 });
+function toggleNoEntries() {
+  if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
+  if ($noEntriesLi.matches('.hidden')) {
+    $noEntriesLi.className = '';
+  } else {
+    $noEntriesLi.className = 'hidden';
+  }
+}
+toggleNoEntries();
