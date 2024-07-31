@@ -36,17 +36,44 @@ $entryForm.addEventListener('submit', (event) => {
   const title = $titleInput.value;
   const photoUrl = $photoUrlInput.value;
   const notes = $notesTextArea.value;
-  const entryValues = {
-    title,
-    photoUrl,
-    notes,
-    entryId: data.nextEntryId,
-  };
-  data.nextEntryId++;
-  data.entries.unshift(entryValues);
-  writeData();
-  const $newEntry = renderEntry(entryValues);
-  $allEntriesUl.prepend($newEntry);
+  if (data.editing === null) {
+    const entryValues = {
+      title,
+      photoUrl,
+      notes,
+      entryId: data.nextEntryId,
+    };
+    data.nextEntryId++;
+    data.entries.unshift(entryValues);
+    writeData();
+    const $newEntry = renderEntry(entryValues);
+    $allEntriesUl.prepend($newEntry);
+  } else {
+    const entryValues = {
+      title,
+      photoUrl,
+      notes,
+      entryId: data.editing.entryId,
+    };
+    let editEntryIndex = -1;
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId === data.editing.entryId) {
+        editEntryIndex = i;
+        break;
+      }
+    }
+    data.entries[editEntryIndex] = entryValues;
+    writeData();
+    const $editedEntry = renderEntry(entryValues);
+    const $replaceEntry = document.querySelector(
+      `li[data-entry-id="${data.editing.entryId}"]`,
+    );
+    if (!$replaceEntry) throw new Error('$replaceEntry query failed');
+    $replaceEntry.replaceWith($editedEntry);
+    $entryFormHeader.textContent = 'New Entry';
+    data.editing = null;
+    writeData();
+  }
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
   viewSwap('entries');
