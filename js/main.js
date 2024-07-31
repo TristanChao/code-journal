@@ -7,6 +7,9 @@ const $photoUrlInput = document.querySelector('#photo-url-input');
 const $notesTextArea = document.querySelector('#notes-text-area');
 const $allEntriesUl = document.querySelector('#entries-ul');
 const $noEntriesLi = document.querySelector('#no-entries-li');
+const $entryFormDiv = document.querySelector('div[data-view="entry-form"]');
+const $entriesDiv = document.querySelector('div[data-view="entries"]');
+const $entriesViewA = document.querySelector('#entries-view-a');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -14,6 +17,9 @@ if (!$photoUrlInput) throw new Error('$photoUrlInput query failed');
 if (!$notesTextArea) throw new Error('$notesTextArea query failed');
 if (!$allEntriesUl) throw new Error('$allEntriesDiv query failed');
 if (!$noEntriesLi) throw new Error('$noEntriesLi query failed');
+if (!$entryFormDiv) throw new Error('$entryFormDiv query failed');
+if (!$entriesDiv) throw new Error('$entriesDiv query failed');
+if (!$entriesViewA) throw new Error('$entriesViewA query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -76,3 +82,19 @@ function toggleNoEntries() {
   }
 }
 toggleNoEntries();
+function viewSwap(view) {
+  if (!$entryFormDiv) throw new Error('$entryFormDiv query failed');
+  if (!$entriesDiv) throw new Error('$entriesDiv query failed');
+  if (view === 'entries') {
+    $entryFormDiv.className = 'hidden';
+    $entriesDiv.className = '';
+  } else {
+    $entriesDiv.className = 'hidden';
+    $entryFormDiv.className = '';
+  }
+  data.view = view;
+  writeData();
+}
+$entriesViewA.addEventListener('click', () => {
+  viewSwap('entries');
+});
