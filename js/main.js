@@ -217,12 +217,12 @@ $searchForm.addEventListener('submit', (event) => {
   event.preventDefault();
   $searchInput.className = 'with-clear';
   $clearSearchBtn.className = '';
-  const searchTerm = $searchInput.value;
+  const searchTerm = $searchInput.value.toLowerCase();
   if (!searchTerm) return;
   for (let i = 0; i < data.entries.length; i++) {
     if (
-      !data.entries[i].title.includes(searchTerm) &&
-      !data.entries[i].notes.includes(searchTerm)
+      !data.entries[i].title.toLowerCase().includes(searchTerm) &&
+      !data.entries[i].notes.toLowerCase().includes(searchTerm)
     ) {
       const $hideLi = document.querySelector(
         `li[data-entry-id="${data.entries[i].entryId}"]`,
