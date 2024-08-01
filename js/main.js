@@ -141,7 +141,6 @@ $allEntriesUl.addEventListener('click', (event) => {
   if (!$target.matches('.fa-pencil')) {
     return;
   }
-  viewSwap('entry-form');
   const $targetLi = $target.closest('li');
   if (!$targetLi) throw new Error('$targetLi query failed');
   const targetLiId = Number($targetLi.getAttribute('data-entry-id'));
@@ -157,4 +156,5 @@ $allEntriesUl.addEventListener('click', (event) => {
   $notesTextArea.value = data.editing.notes;
   $entryImg.setAttribute('src', data.editing.photoUrl);
   $entryFormHeader.textContent = 'Edit Entry';
+  viewSwap('entry-form');
 });

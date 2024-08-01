@@ -178,8 +178,6 @@ $allEntriesUl.addEventListener('click', (event: Event) => {
     return;
   }
 
-  viewSwap('entry-form');
-
   const $targetLi = $target.closest('li');
   if (!$targetLi) throw new Error('$targetLi query failed');
 
@@ -200,4 +198,6 @@ $allEntriesUl.addEventListener('click', (event: Event) => {
   $entryImg.setAttribute('src', data.editing.photoUrl);
 
   $entryFormHeader.textContent = 'Edit Entry';
+
+  viewSwap('entry-form');
 });
