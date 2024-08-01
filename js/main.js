@@ -12,6 +12,7 @@ const $entriesDiv = document.querySelector('div[data-view="entries"]');
 const $entriesViewA = document.querySelector('#entries-view-a');
 const $newEntryA = document.querySelector('#new-entry-a');
 const $entryFormHeader = document.querySelector('#entry-form-header');
+const $deleteEntryBtn = document.querySelector('#delete-entry-btn');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -24,6 +25,7 @@ if (!$entriesDiv) throw new Error('$entriesDiv query failed');
 if (!$entriesViewA) throw new Error('$entriesViewA query failed');
 if (!$newEntryA) throw new Error('$newEntryA query failed');
 if (!$entryFormHeader) throw new Error('$entryFormHeader query failed');
+if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -63,6 +65,7 @@ $entryForm.addEventListener('submit', (event) => {
     $replaceEntry.replaceWith($editedEntry);
     $entryFormHeader.textContent = 'New Entry';
     data.editing = null;
+    $deleteEntryBtn.className = 'hidden';
   }
   writeData();
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -134,6 +137,7 @@ $entriesViewA.addEventListener('click', () => {
 });
 $newEntryA.addEventListener('click', () => {
   viewSwap('entry-form');
+  $deleteEntryBtn.className = 'hidden';
 });
 $allEntriesUl.addEventListener('click', (event) => {
   const $target = event.target;
@@ -155,6 +159,7 @@ $allEntriesUl.addEventListener('click', (event) => {
   $photoUrlInput.value = data.editing.photoUrl;
   $notesTextArea.value = data.editing.notes;
   $entryImg.setAttribute('src', data.editing.photoUrl);
+  $deleteEntryBtn.className = '';
   $entryFormHeader.textContent = 'Edit Entry';
   viewSwap('entry-form');
 });

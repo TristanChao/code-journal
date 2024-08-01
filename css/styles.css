@@ -60,6 +60,14 @@ button {
   border-radius: 5px;
 }
 
+button:hover {
+  cursor: pointer;
+}
+
+#submit-entry-btn:hover {
+  background-color: #33184f;
+}
+
 img {
   width: 100%;
 }
@@ -95,4 +103,13 @@ img {
 .fa-pencil:hover {
   cursor: pointer;
   color: #828282;
+}
+
+#delete-entry-btn {
+  background-color: transparent;
+  border-color: transparent;
+  color: red;
+  text-decoration: underline;
+  padding: 0;
+  width: 80px;
 }

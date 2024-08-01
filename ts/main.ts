@@ -24,6 +24,9 @@ const $newEntryA = document.querySelector('#new-entry-a') as HTMLAnchorElement;
 const $entryFormHeader = document.querySelector(
   '#entry-form-header',
 ) as HTMLHeadElement;
+const $deleteEntryBtn = document.querySelector(
+  '#delete-entry-btn',
+) as HTMLButtonElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -37,6 +40,7 @@ if (!$entriesDiv) throw new Error('$entriesDiv query failed');
 if (!$entriesViewA) throw new Error('$entriesViewA query failed');
 if (!$newEntryA) throw new Error('$newEntryA query failed');
 if (!$entryFormHeader) throw new Error('$entryFormHeader query failed');
+if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -80,6 +84,7 @@ $entryForm.addEventListener('submit', (event: Event) => {
     $replaceEntry.replaceWith($editedEntry);
     $entryFormHeader.textContent = 'New Entry';
     data.editing = null;
+    $deleteEntryBtn.className = 'hidden';
   }
   writeData();
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -168,6 +173,7 @@ $entriesViewA.addEventListener('click', () => {
 
 $newEntryA.addEventListener('click', () => {
   viewSwap('entry-form');
+  $deleteEntryBtn.className = 'hidden';
 });
 
 $allEntriesUl.addEventListener('click', (event: Event) => {
@@ -196,6 +202,7 @@ $allEntriesUl.addEventListener('click', (event: Event) => {
   $photoUrlInput.value = data.editing.photoUrl;
   $notesTextArea.value = data.editing.notes;
   $entryImg.setAttribute('src', data.editing.photoUrl);
+  $deleteEntryBtn.className = '';
 
   $entryFormHeader.textContent = 'Edit Entry';
 
