@@ -151,6 +151,9 @@ function renderEntry(entry: Entry): HTMLLIElement {
   const $notesP = document.createElement('p');
   $notesP.textContent = entry.notes;
 
+  const $tagsP = document.createElement('p');
+  $tagsP.textContent = 'Tags: ' + entry.tags;
+
   $entryLI.appendChild($rowDiv);
   $rowDiv.appendChild($imgDiv);
   $imgDiv.appendChild($entryImg);
@@ -159,6 +162,7 @@ function renderEntry(entry: Entry): HTMLLIElement {
   $titleDiv.appendChild($titleH3);
   $titleDiv.appendChild($pencilIcon);
   $textDiv.appendChild($notesP);
+  $textDiv.appendChild($tagsP);
 
   return $entryLI;
 }

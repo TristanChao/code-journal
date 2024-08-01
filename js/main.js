@@ -112,6 +112,8 @@ function renderEntry(entry) {
   $pencilIcon.className = 'fa-solid fa-pencil';
   const $notesP = document.createElement('p');
   $notesP.textContent = entry.notes;
+  const $tagsP = document.createElement('p');
+  $tagsP.textContent = 'Tags: ' + entry.tags;
   $entryLI.appendChild($rowDiv);
   $rowDiv.appendChild($imgDiv);
   $imgDiv.appendChild($entryImg);
@@ -120,6 +122,7 @@ function renderEntry(entry) {
   $titleDiv.appendChild($titleH3);
   $titleDiv.appendChild($pencilIcon);
   $textDiv.appendChild($notesP);
+  $textDiv.appendChild($tagsP);
   return $entryLI;
 }
 document.addEventListener('DOMContentLoaded', () => {
