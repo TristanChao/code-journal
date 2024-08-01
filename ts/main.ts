@@ -33,6 +33,9 @@ const $deleteEntryDialog = document.querySelector(
 const $cancelDeleteBtn = document.querySelector(
   '#cancel-delete-btn',
 ) as HTMLButtonElement;
+const $confirmDeleteBtn = document.querySelector(
+  '#confirm-delete-btn',
+) as HTMLButtonElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -49,6 +52,7 @@ if (!$entryFormHeader) throw new Error('$entryFormHeader query failed');
 if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
 if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
 if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
+if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -90,13 +94,11 @@ $entryForm.addEventListener('submit', (event: Event) => {
     );
     if (!$replaceEntry) throw new Error('$replaceEntry query failed');
     $replaceEntry.replaceWith($editedEntry);
-    $entryFormHeader.textContent = 'New Entry';
     data.editing = null;
     $deleteEntryBtn.className = 'hidden';
   }
   writeData();
-  $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
-  $entryForm.reset();
+  resetEntryForm();
   viewSwap('entries');
   toggleNoEntries();
 });
@@ -177,10 +179,14 @@ function viewSwap(view: string): void {
 
 $entriesViewA.addEventListener('click', () => {
   viewSwap('entries');
+  resetEntryForm();
+});
+
+function resetEntryForm(): void {
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
   $entryFormHeader.textContent = 'New Entry';
-});
+}
 
 $newEntryA.addEventListener('click', () => {
   viewSwap('entry-form');

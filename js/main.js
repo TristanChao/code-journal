@@ -15,6 +15,7 @@ const $entryFormHeader = document.querySelector('#entry-form-header');
 const $deleteEntryBtn = document.querySelector('#delete-entry-btn');
 const $deleteEntryDialog = document.querySelector('#delete-entry-dialog');
 const $cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
+const $confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -30,6 +31,7 @@ if (!$entryFormHeader) throw new Error('$entryFormHeader query failed');
 if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
 if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
 if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
+if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -67,13 +69,11 @@ $entryForm.addEventListener('submit', (event) => {
     );
     if (!$replaceEntry) throw new Error('$replaceEntry query failed');
     $replaceEntry.replaceWith($editedEntry);
-    $entryFormHeader.textContent = 'New Entry';
     data.editing = null;
     $deleteEntryBtn.className = 'hidden';
   }
   writeData();
-  $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
-  $entryForm.reset();
+  resetEntryForm();
   viewSwap('entries');
   toggleNoEntries();
 });
@@ -138,10 +138,13 @@ function viewSwap(view) {
 }
 $entriesViewA.addEventListener('click', () => {
   viewSwap('entries');
+  resetEntryForm();
+});
+function resetEntryForm() {
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
   $entryFormHeader.textContent = 'New Entry';
-});
+}
 $newEntryA.addEventListener('click', () => {
   viewSwap('entry-form');
   $deleteEntryBtn.className = 'hidden';
