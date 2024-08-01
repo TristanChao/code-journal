@@ -6,7 +6,7 @@ interface Entry {
   title: string;
   photoUrl: string;
   notes: string;
-  entryId: number;
+  entryId?: number;
 }
 
 interface DataObject {

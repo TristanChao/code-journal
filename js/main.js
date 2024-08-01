@@ -36,34 +36,25 @@ $entryForm.addEventListener('submit', (event) => {
   const title = $titleInput.value;
   const photoUrl = $photoUrlInput.value;
   const notes = $notesTextArea.value;
+  const entryValues = {
+    title,
+    photoUrl,
+    notes,
+  };
   if (data.editing === null) {
-    const entryValues = {
-      title,
-      photoUrl,
-      notes,
-      entryId: data.nextEntryId,
-    };
+    entryValues.entryId = data.nextEntryId;
     data.nextEntryId++;
     data.entries.unshift(entryValues);
-    writeData();
     const $newEntry = renderEntry(entryValues);
     $allEntriesUl.prepend($newEntry);
   } else {
-    const entryValues = {
-      title,
-      photoUrl,
-      notes,
-      entryId: data.editing.entryId,
-    };
-    let editEntryIndex = -1;
+    entryValues.entryId = data.editing.entryId;
     for (let i = 0; i < data.entries.length; i++) {
       if (data.entries[i].entryId === data.editing.entryId) {
-        editEntryIndex = i;
+        data.entries[i] = entryValues;
         break;
       }
     }
-    data.entries[editEntryIndex] = entryValues;
-    writeData();
     const $editedEntry = renderEntry(entryValues);
     const $replaceEntry = document.querySelector(
       `li[data-entry-id="${data.editing.entryId}"]`,
@@ -72,8 +63,8 @@ $entryForm.addEventListener('submit', (event) => {
     $replaceEntry.replaceWith($editedEntry);
     $entryFormHeader.textContent = 'New Entry';
     data.editing = null;
-    writeData();
   }
+  writeData();
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
   viewSwap('entries');
@@ -154,7 +145,6 @@ $allEntriesUl.addEventListener('click', (event) => {
   const $targetLi = $target.closest('li');
   if (!$targetLi) throw new Error('$targetLi query failed');
   const targetLiId = Number($targetLi.getAttribute('data-entry-id'));
-  console.log('targetId:', targetLiId);
   for (let i = 0; i < data.entries.length; i++) {
     if (data.entries[i].entryId === targetLiId) {
       data.editing = data.entries[i];
@@ -162,7 +152,6 @@ $allEntriesUl.addEventListener('click', (event) => {
     }
   }
   if (!data.editing) throw new Error('data.editing has no value');
-  console.log('data.editing:', data.editing);
   $titleInput.value = data.editing.title;
   $photoUrlInput.value = data.editing.photoUrl;
   $notesTextArea.value = data.editing.notes;
