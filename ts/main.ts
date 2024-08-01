@@ -36,6 +36,13 @@ const $cancelDeleteBtn = document.querySelector(
 const $confirmDeleteBtn = document.querySelector(
   '#confirm-delete-btn',
 ) as HTMLButtonElement;
+const $searchForm = document.querySelector('#search-form') as HTMLFormElement;
+const $searchInput = document.querySelector(
+  '#search-input',
+) as HTMLInputElement;
+const $clearSearchBtn = document.querySelector(
+  '#clear-search-btn',
+) as HTMLButtonElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -53,6 +60,9 @@ if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
 if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
 if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
 if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
+if (!$searchForm) throw new Error('$searchForm query failed');
+if (!$searchInput) throw new Error('$searchInput query failed');
+if (!$clearSearchBtn) throw new Error('$clearSearchBtn query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -255,4 +265,44 @@ $confirmDeleteBtn.addEventListener('click', () => {
   data.editing = null;
   viewSwap('entries');
   resetEntryForm();
+});
+
+$searchForm.addEventListener('submit', (event: Event) => {
+  event.preventDefault();
+
+  const searchTerm = $searchInput.value.toLowerCase();
+
+  if (!searchTerm) return;
+
+  $searchInput.className = 'with-clear';
+  $clearSearchBtn.className = '';
+
+  const entryLiList = document.querySelectorAll(
+    '#entries-ul > li[data-entry-id]',
+  ) as NodeListOf<HTMLLIElement>;
+  if (!entryLiList) throw new Error('entryLiList query failed');
+
+  for (let i = 0; i < entryLiList.length; i++) {
+    if (!entryLiList[i].textContent?.toLowerCase().includes(searchTerm)) {
+      entryLiList[i].className = 'hidden';
+    } else {
+      entryLiList[i].className = '';
+    }
+  }
+});
+
+$clearSearchBtn.addEventListener('click', () => {
+  const entryLiList = document.querySelectorAll(
+    '#entries-ul > li[data-entry-id]',
+  ) as NodeListOf<HTMLLIElement>;
+  if (!entryLiList) throw new Error('entryLiList query failed');
+
+  for (let i = 0; i < entryLiList.length; i++) {
+    entryLiList[i].className = '';
+  }
+
+  $searchForm.reset();
+
+  $clearSearchBtn.className = 'hidden';
+  $searchInput.className = '';
 });

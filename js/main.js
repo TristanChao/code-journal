@@ -16,6 +16,9 @@ const $deleteEntryBtn = document.querySelector('#delete-entry-btn');
 const $deleteEntryDialog = document.querySelector('#delete-entry-dialog');
 const $cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
 const $confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
+const $searchForm = document.querySelector('#search-form');
+const $searchInput = document.querySelector('#search-input');
+const $clearSearchBtn = document.querySelector('#clear-search-btn');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -32,6 +35,9 @@ if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
 if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
 if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
 if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
+if (!$searchForm) throw new Error('$searchForm query failed');
+if (!$searchInput) throw new Error('$searchInput query failed');
+if (!$clearSearchBtn) throw new Error('$clearSearchBtn query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -199,4 +205,34 @@ $confirmDeleteBtn.addEventListener('click', () => {
   data.editing = null;
   viewSwap('entries');
   resetEntryForm();
+});
+$searchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const searchTerm = $searchInput.value.toLowerCase();
+  if (!searchTerm) return;
+  $searchInput.className = 'with-clear';
+  $clearSearchBtn.className = '';
+  const entryLiList = document.querySelectorAll(
+    '#entries-ul > li[data-entry-id]',
+  );
+  if (!entryLiList) throw new Error('entryLiList query failed');
+  for (let i = 0; i < entryLiList.length; i++) {
+    if (!entryLiList[i].textContent?.toLowerCase().includes(searchTerm)) {
+      entryLiList[i].className = 'hidden';
+    } else {
+      entryLiList[i].className = '';
+    }
+  }
+});
+$clearSearchBtn.addEventListener('click', () => {
+  const entryLiList = document.querySelectorAll(
+    '#entries-ul > li[data-entry-id]',
+  );
+  if (!entryLiList) throw new Error('entryLiList query failed');
+  for (let i = 0; i < entryLiList.length; i++) {
+    entryLiList[i].className = '';
+  }
+  $searchForm.reset();
+  $clearSearchBtn.className = 'hidden';
+  $searchInput.className = '';
 });

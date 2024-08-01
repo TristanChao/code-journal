@@ -5,6 +5,7 @@ header {
 
 body {
   background-color: #eee;
+  min-width: 235px;
 }
 
 header > .container {
@@ -154,4 +155,28 @@ img {
 
 #delete-dialog-buttons-div {
   margin-bottom: 0;
+}
+
+#search-form > div > * {
+  margin: 0;
+  height: 35px;
+}
+
+#search-input {
+  width: calc(100% - 45px);
+  font-size: 16px;
+  padding-left: 8px;
+}
+
+#search-input.with-clear {
+  width: calc(100% - 95px);
+}
+
+#search-btn {
+  width: 40px;
+}
+
+#clear-search-btn {
+  width: 50px;
+  background-color: grey;
 }
