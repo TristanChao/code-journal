@@ -168,6 +168,15 @@ img {
   padding-left: 8px;
 }
 
+#search-input.with-clear {
+  width: calc(100% - 95px);
+}
+
 #search-btn {
   width: 40px;
+}
+
+#clear-search-btn {
+  width: 50px;
+  background-color: grey;
 }

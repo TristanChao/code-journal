@@ -18,6 +18,7 @@ const $cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
 const $confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
 const $searchForm = document.querySelector('#search-form');
 const $searchInput = document.querySelector('#search-input');
+const $clearSearchBtn = document.querySelector('#clear-search-btn');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -36,6 +37,7 @@ if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
 if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
 if (!$searchForm) throw new Error('$searchForm query failed');
 if (!$searchInput) throw new Error('$searchInput query failed');
+if (!$clearSearchBtn) throw new Error('$clearSearchBtn query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -205,7 +207,16 @@ $confirmDeleteBtn.addEventListener('click', () => {
   resetEntryForm();
 });
 $searchForm.addEventListener('submit', (event) => {
+  for (let i = 0; i < data.entries.length; i++) {
+    const $showLi = document.querySelector(
+      `li[data-entry-id="${data.entries[i].entryId}"]`,
+    );
+    if (!$showLi) throw new Error('$hideLi query failed');
+    $showLi.className = '';
+  }
   event.preventDefault();
+  $searchInput.className = 'with-clear';
+  $clearSearchBtn.className = '';
   const searchTerm = $searchInput.value;
   if (!searchTerm) return;
   for (let i = 0; i < data.entries.length; i++) {
@@ -220,4 +231,16 @@ $searchForm.addEventListener('submit', (event) => {
       $hideLi.className = 'hidden';
     }
   }
+});
+$clearSearchBtn.addEventListener('click', () => {
+  for (let i = 0; i < data.entries.length; i++) {
+    const $showLi = document.querySelector(
+      `li[data-entry-id="${data.entries[i].entryId}"]`,
+    );
+    if (!$showLi) throw new Error('$hideLi query failed');
+    $showLi.className = '';
+  }
+  $searchForm.reset();
+  $clearSearchBtn.className = 'hidden';
+  $searchInput.className = '';
 });

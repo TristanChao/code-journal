@@ -40,6 +40,9 @@ const $searchForm = document.querySelector('#search-form') as HTMLFormElement;
 const $searchInput = document.querySelector(
   '#search-input',
 ) as HTMLInputElement;
+const $clearSearchBtn = document.querySelector(
+  '#clear-search-btn',
+) as HTMLButtonElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -59,6 +62,7 @@ if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
 if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
 if (!$searchForm) throw new Error('$searchForm query failed');
 if (!$searchInput) throw new Error('$searchInput query failed');
+if (!$clearSearchBtn) throw new Error('$clearSearchBtn query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -264,7 +268,18 @@ $confirmDeleteBtn.addEventListener('click', () => {
 });
 
 $searchForm.addEventListener('submit', (event: Event) => {
+  for (let i = 0; i < data.entries.length; i++) {
+    const $showLi = document.querySelector(
+      `li[data-entry-id="${data.entries[i].entryId}"]`,
+    );
+    if (!$showLi) throw new Error('$hideLi query failed');
+    $showLi.className = '';
+  }
+
   event.preventDefault();
+
+  $searchInput.className = 'with-clear';
+  $clearSearchBtn.className = '';
 
   const searchTerm = $searchInput.value;
 
@@ -282,4 +297,19 @@ $searchForm.addEventListener('submit', (event: Event) => {
       $hideLi.className = 'hidden';
     }
   }
+});
+
+$clearSearchBtn.addEventListener('click', () => {
+  for (let i = 0; i < data.entries.length; i++) {
+    const $showLi = document.querySelector(
+      `li[data-entry-id="${data.entries[i].entryId}"]`,
+    );
+    if (!$showLi) throw new Error('$hideLi query failed');
+    $showLi.className = '';
+  }
+
+  $searchForm.reset();
+
+  $clearSearchBtn.className = 'hidden';
+  $searchInput.className = '';
 });
