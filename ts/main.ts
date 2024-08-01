@@ -178,6 +178,7 @@ function viewSwap(view: string): void {
 }
 
 $entriesViewA.addEventListener('click', () => {
+  data.editing = null;
   viewSwap('entries');
   resetEntryForm();
 });
@@ -189,6 +190,7 @@ function resetEntryForm(): void {
 }
 
 $newEntryA.addEventListener('click', () => {
+  data.editing = null;
   viewSwap('entry-form');
   $deleteEntryBtn.className = 'hidden';
 });
