@@ -97,6 +97,13 @@
         <div id="search-container" class="column-full">
           <form id="search-form">
             <div class="row justify-sb">
+              <label for="filter-by-select">Filter by:</label>
+              <select id="filter-by-select">
+                <option value="all">All</option>
+                <option value="title">Title</option>
+                <option value="notes">Notes</option>
+                <option value="tags">Tags</option>
+              </select>
               <input id="search-input" placeholder="Search for entries" />
               <button type="submit" id="search-btn">
                 <i class="fa-solid fa-magnifying-glass"></i>
