@@ -20,6 +20,7 @@ const $searchForm = document.querySelector('#search-form');
 const $searchInput = document.querySelector('#search-input');
 const $clearSearchBtn = document.querySelector('#clear-search-btn');
 const $tagsInput = document.querySelector('#tags-input');
+const $filterBySelect = document.querySelector('#filter-by-select');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -40,6 +41,7 @@ if (!$searchForm) throw new Error('$searchForm query failed');
 if (!$searchInput) throw new Error('$searchInput query failed');
 if (!$clearSearchBtn) throw new Error('$clearSearchBtn query failed');
 if (!$tagsInput) throw new Error('$tagsInput query failed');
+if (!$filterBySelect) throw new Error('$filterBySelect query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -229,13 +231,59 @@ $searchForm.addEventListener('submit', (event) => {
     '#entries-ul > li[data-entry-id]',
   );
   if (!entryLiList) throw new Error('entryLiList query failed');
+  const filter = $filterBySelect.value;
+  // const liDataEntry = data.entries.find((element) => element.entryId);
   for (let i = 0; i < entryLiList.length; i++) {
-    if (!entryLiList[i].textContent?.toLowerCase().includes(searchTerm)) {
-      entryLiList[i].className = 'hidden';
-    } else {
+    const liDataEntry = data.entries.find(
+      (element) =>
+        element.entryId ===
+        Number(entryLiList[i].getAttribute('data-entry-id')),
+    );
+    if (!liDataEntry) throw new Error('liDataEntry has no value');
+    let searchCriteria;
+    if (filter === 'all') {
+      searchCriteria = entryLiList[i].textContent
+        ?.toLowerCase()
+        .includes(searchTerm);
+    } else if (filter === 'title') {
+      searchCriteria = liDataEntry.title.toLowerCase().includes(searchTerm);
+    } else if (filter === 'notes') {
+      searchCriteria = liDataEntry.notes.toLowerCase().includes(searchTerm);
+    } else if (filter === 'tags') {
+      searchCriteria = liDataEntry.tags.toLowerCase().includes(searchTerm);
+    }
+    if (searchCriteria) {
       entryLiList[i].className = '';
+    } else {
+      entryLiList[i].className = 'hidden';
     }
   }
+  // if (filter === 'all') {
+  //   for (let i = 0; i < entryLiList.length; i++) {
+  //     if (!entryLiList[i].textContent?.toLowerCase().includes(searchTerm)) {
+  //       entryLiList[i].className = 'hidden';
+  //     } else {
+  //       entryLiList[i].className = '';
+  //     }
+  //   }
+  // } else if (filter === 'title') {
+  //   for (let i = 0; i < entryLiList.length; i++) {
+  //     const liDataEntry = data.entries.find(
+  //       (element) =>
+  //         element.entryId ===
+  //         Number(entryLiList[i].getAttribute('data-entry-id')),
+  //     );
+  //     if (!liDataEntry?.title.toLowerCase().includes(searchTerm)) {
+  //       entryLiList[i].className = 'hidden';
+  //     } else {
+  //       entryLiList[i].className = '';
+  //     }
+  //   }
+  // } else if (filter === 'notes') {
+  //   console.log();
+  // } else if (filter === 'tags') {
+  //   console.log();
+  // }
 });
 $clearSearchBtn.addEventListener('click', () => {
   const entryLiList = document.querySelectorAll(

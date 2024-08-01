@@ -180,7 +180,7 @@ img {
 }
 
 #search-input.with-clear {
-  width: calc(100% - 95px);
+  width: calc(100% - 225px);
 }
 
 #search-btn {
