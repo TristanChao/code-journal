@@ -232,7 +232,6 @@ $searchForm.addEventListener('submit', (event) => {
   );
   if (!entryLiList) throw new Error('entryLiList query failed');
   const filter = $filterBySelect.value;
-  // const liDataEntry = data.entries.find((element) => element.entryId);
   for (let i = 0; i < entryLiList.length; i++) {
     const liDataEntry = data.entries.find(
       (element) =>
@@ -258,32 +257,6 @@ $searchForm.addEventListener('submit', (event) => {
       entryLiList[i].className = 'hidden';
     }
   }
-  // if (filter === 'all') {
-  //   for (let i = 0; i < entryLiList.length; i++) {
-  //     if (!entryLiList[i].textContent?.toLowerCase().includes(searchTerm)) {
-  //       entryLiList[i].className = 'hidden';
-  //     } else {
-  //       entryLiList[i].className = '';
-  //     }
-  //   }
-  // } else if (filter === 'title') {
-  //   for (let i = 0; i < entryLiList.length; i++) {
-  //     const liDataEntry = data.entries.find(
-  //       (element) =>
-  //         element.entryId ===
-  //         Number(entryLiList[i].getAttribute('data-entry-id')),
-  //     );
-  //     if (!liDataEntry?.title.toLowerCase().includes(searchTerm)) {
-  //       entryLiList[i].className = 'hidden';
-  //     } else {
-  //       entryLiList[i].className = '';
-  //     }
-  //   }
-  // } else if (filter === 'notes') {
-  //   console.log();
-  // } else if (filter === 'tags') {
-  //   console.log();
-  // }
 });
 $clearSearchBtn.addEventListener('click', () => {
   const entryLiList = document.querySelectorAll(
