@@ -19,6 +19,7 @@ const $confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
 const $searchForm = document.querySelector('#search-form');
 const $searchInput = document.querySelector('#search-input');
 const $clearSearchBtn = document.querySelector('#clear-search-btn');
+const $tagsInput = document.querySelector('#tags-input');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -38,6 +39,7 @@ if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
 if (!$searchForm) throw new Error('$searchForm query failed');
 if (!$searchInput) throw new Error('$searchInput query failed');
 if (!$clearSearchBtn) throw new Error('$clearSearchBtn query failed');
+if (!$tagsInput) throw new Error('$tagsInput query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -50,10 +52,17 @@ $entryForm.addEventListener('submit', (event) => {
   const title = $titleInput.value;
   const photoUrl = $photoUrlInput.value;
   const notes = $notesTextArea.value;
+  let tags;
+  if (!$tagsInput.value) {
+    tags = 'none';
+  } else {
+    tags = $tagsInput.value;
+  }
   const entryValues = {
     title,
     photoUrl,
     notes,
+    tags,
   };
   if (data.editing === null) {
     entryValues.entryId = data.nextEntryId;
@@ -175,6 +184,7 @@ $allEntriesUl.addEventListener('click', (event) => {
   if (!data.editing) throw new Error('data.editing has no value');
   $titleInput.value = data.editing.title;
   $photoUrlInput.value = data.editing.photoUrl;
+  $tagsInput.value = data.editing.tags;
   $notesTextArea.value = data.editing.notes;
   $entryImg.setAttribute('src', data.editing.photoUrl);
   $deleteEntryBtn.className = '';

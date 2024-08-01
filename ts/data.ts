@@ -6,6 +6,7 @@ interface Entry {
   title: string;
   photoUrl: string;
   notes: string;
+  tags: string;
   entryId?: number;
 }
 
