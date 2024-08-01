@@ -5,6 +5,7 @@ header {
 
 body {
   background-color: #eee;
+  min-width: 235px;
 }
 
 header > .container {
@@ -156,18 +157,17 @@ img {
   margin-bottom: 0;
 }
 
-#search-form > * {
-  padding: 0;
+#search-form > div > * {
   margin: 0;
   height: 35px;
 }
 
 #search-input {
-  width: 94%;
+  width: calc(100% - 45px);
   font-size: 16px;
   padding-left: 8px;
 }
 
 #search-btn {
-  width: 5%;
+  width: 40px;
 }

@@ -36,6 +36,10 @@ const $cancelDeleteBtn = document.querySelector(
 const $confirmDeleteBtn = document.querySelector(
   '#confirm-delete-btn',
 ) as HTMLButtonElement;
+const $searchForm = document.querySelector('#search-form') as HTMLFormElement;
+const $searchInput = document.querySelector(
+  '#search-input',
+) as HTMLInputElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -53,6 +57,8 @@ if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
 if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
 if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
 if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
+if (!$searchForm) throw new Error('$searchForm query failed');
+if (!$searchInput) throw new Error('$searchInput query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -255,4 +261,25 @@ $confirmDeleteBtn.addEventListener('click', () => {
   data.editing = null;
   viewSwap('entries');
   resetEntryForm();
+});
+
+$searchForm.addEventListener('submit', (event: Event) => {
+  event.preventDefault();
+
+  const searchTerm = $searchInput.value;
+
+  if (!searchTerm) return;
+
+  for (let i = 0; i < data.entries.length; i++) {
+    if (
+      !data.entries[i].title.includes(searchTerm) &&
+      !data.entries[i].notes.includes(searchTerm)
+    ) {
+      const $hideLi = document.querySelector(
+        `li[data-entry-id="${data.entries[i].entryId}"]`,
+      );
+      if (!$hideLi) throw new Error('$hideLi query failed');
+      $hideLi.className = 'hidden';
+    }
+  }
 });

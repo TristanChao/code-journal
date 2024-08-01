@@ -16,6 +16,8 @@ const $deleteEntryBtn = document.querySelector('#delete-entry-btn');
 const $deleteEntryDialog = document.querySelector('#delete-entry-dialog');
 const $cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
 const $confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
+const $searchForm = document.querySelector('#search-form');
+const $searchInput = document.querySelector('#search-input');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -32,6 +34,8 @@ if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
 if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
 if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
 if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
+if (!$searchForm) throw new Error('$searchForm query failed');
+if (!$searchInput) throw new Error('$searchInput query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -199,4 +203,21 @@ $confirmDeleteBtn.addEventListener('click', () => {
   data.editing = null;
   viewSwap('entries');
   resetEntryForm();
+});
+$searchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const searchTerm = $searchInput.value;
+  if (!searchTerm) return;
+  for (let i = 0; i < data.entries.length; i++) {
+    if (
+      !data.entries[i].title.includes(searchTerm) &&
+      !data.entries[i].notes.includes(searchTerm)
+    ) {
+      const $hideLi = document.querySelector(
+        `li[data-entry-id="${data.entries[i].entryId}"]`,
+      );
+      if (!$hideLi) throw new Error('$hideLi query failed');
+      $hideLi.className = 'hidden';
+    }
+  }
 });
