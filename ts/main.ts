@@ -24,6 +24,18 @@ const $newEntryA = document.querySelector('#new-entry-a') as HTMLAnchorElement;
 const $entryFormHeader = document.querySelector(
   '#entry-form-header',
 ) as HTMLHeadElement;
+const $deleteEntryBtn = document.querySelector(
+  '#delete-entry-btn',
+) as HTMLButtonElement;
+const $deleteEntryDialog = document.querySelector(
+  '#delete-entry-dialog',
+) as HTMLDialogElement;
+const $cancelDeleteBtn = document.querySelector(
+  '#cancel-delete-btn',
+) as HTMLButtonElement;
+const $confirmDeleteBtn = document.querySelector(
+  '#confirm-delete-btn',
+) as HTMLButtonElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -37,6 +49,10 @@ if (!$entriesDiv) throw new Error('$entriesDiv query failed');
 if (!$entriesViewA) throw new Error('$entriesViewA query failed');
 if (!$newEntryA) throw new Error('$newEntryA query failed');
 if (!$entryFormHeader) throw new Error('$entryFormHeader query failed');
+if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
+if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
+if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
+if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -78,12 +94,11 @@ $entryForm.addEventListener('submit', (event: Event) => {
     );
     if (!$replaceEntry) throw new Error('$replaceEntry query failed');
     $replaceEntry.replaceWith($editedEntry);
-    $entryFormHeader.textContent = 'New Entry';
     data.editing = null;
+    $deleteEntryBtn.className = 'hidden';
   }
   writeData();
-  $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
-  $entryForm.reset();
+  resetEntryForm();
   viewSwap('entries');
   toggleNoEntries();
 });
@@ -163,11 +178,21 @@ function viewSwap(view: string): void {
 }
 
 $entriesViewA.addEventListener('click', () => {
+  data.editing = null;
   viewSwap('entries');
+  resetEntryForm();
 });
 
+function resetEntryForm(): void {
+  $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
+  $entryForm.reset();
+  $entryFormHeader.textContent = 'New Entry';
+}
+
 $newEntryA.addEventListener('click', () => {
+  data.editing = null;
   viewSwap('entry-form');
+  $deleteEntryBtn.className = 'hidden';
 });
 
 $allEntriesUl.addEventListener('click', (event: Event) => {
@@ -196,8 +221,38 @@ $allEntriesUl.addEventListener('click', (event: Event) => {
   $photoUrlInput.value = data.editing.photoUrl;
   $notesTextArea.value = data.editing.notes;
   $entryImg.setAttribute('src', data.editing.photoUrl);
+  $deleteEntryBtn.className = '';
 
   $entryFormHeader.textContent = 'Edit Entry';
 
   viewSwap('entry-form');
+});
+
+$deleteEntryBtn.addEventListener('click', () => {
+  $deleteEntryDialog.showModal();
+});
+
+$cancelDeleteBtn.addEventListener('click', () => {
+  $deleteEntryDialog.close();
+});
+
+$confirmDeleteBtn.addEventListener('click', () => {
+  if (!data.editing) throw new Error('data.editing has no value');
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.editing.entryId) {
+      data.entries.splice(i, 1);
+      const $deleteLi = document.querySelector(
+        `li[data-entry-id="${data.editing.entryId}"]`,
+      );
+      if (!$deleteLi) throw new Error('$deleteLi query failed');
+      $deleteLi.remove();
+      break;
+    }
+  }
+
+  toggleNoEntries();
+  $deleteEntryDialog.close();
+  data.editing = null;
+  viewSwap('entries');
+  resetEntryForm();
 });
