@@ -207,28 +207,23 @@ $confirmDeleteBtn.addEventListener('click', () => {
   resetEntryForm();
 });
 $searchForm.addEventListener('submit', (event) => {
-  for (let i = 0; i < data.entries.length; i++) {
-    const $showLi = document.querySelector(
-      `li[data-entry-id="${data.entries[i].entryId}"]`,
-    );
-    if (!$showLi) throw new Error('$hideLi query failed');
-    $showLi.className = '';
-  }
   event.preventDefault();
-  $searchInput.className = 'with-clear';
-  $clearSearchBtn.className = '';
   const searchTerm = $searchInput.value.toLowerCase();
   if (!searchTerm) return;
+  $searchInput.className = 'with-clear';
+  $clearSearchBtn.className = '';
   for (let i = 0; i < data.entries.length; i++) {
+    const $currentLi = document.querySelector(
+      `li[data-entry-id="${data.entries[i].entryId}"]`,
+    );
+    if (!$currentLi) throw new Error('$hideLi query failed');
     if (
       !data.entries[i].title.toLowerCase().includes(searchTerm) &&
       !data.entries[i].notes.toLowerCase().includes(searchTerm)
     ) {
-      const $hideLi = document.querySelector(
-        `li[data-entry-id="${data.entries[i].entryId}"]`,
-      );
-      if (!$hideLi) throw new Error('$hideLi query failed');
-      $hideLi.className = 'hidden';
+      $currentLi.className = 'hidden';
+    } else {
+      $currentLi.className = '';
     }
   }
 });
