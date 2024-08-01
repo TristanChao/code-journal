@@ -212,28 +212,25 @@ $searchForm.addEventListener('submit', (event) => {
   if (!searchTerm) return;
   $searchInput.className = 'with-clear';
   $clearSearchBtn.className = '';
-  for (let i = 0; i < data.entries.length; i++) {
-    const $currentLi = document.querySelector(
-      `li[data-entry-id="${data.entries[i].entryId}"]`,
-    );
-    if (!$currentLi) throw new Error('$hideLi query failed');
-    if (
-      !data.entries[i].title.toLowerCase().includes(searchTerm) &&
-      !data.entries[i].notes.toLowerCase().includes(searchTerm)
-    ) {
-      $currentLi.className = 'hidden';
+  const entryLiList = document.querySelectorAll(
+    '#entries-ul > li[data-entry-id]',
+  );
+  if (!entryLiList) throw new Error('entryLiList query failed');
+  for (let i = 0; i < entryLiList.length; i++) {
+    if (!entryLiList[i].textContent?.toLowerCase().includes(searchTerm)) {
+      entryLiList[i].className = 'hidden';
     } else {
-      $currentLi.className = '';
+      entryLiList[i].className = '';
     }
   }
 });
 $clearSearchBtn.addEventListener('click', () => {
-  for (let i = 0; i < data.entries.length; i++) {
-    const $showLi = document.querySelector(
-      `li[data-entry-id="${data.entries[i].entryId}"]`,
-    );
-    if (!$showLi) throw new Error('$hideLi query failed');
-    $showLi.className = '';
+  const entryLiList = document.querySelectorAll(
+    '#entries-ul > li[data-entry-id]',
+  );
+  if (!entryLiList) throw new Error('entryLiList query failed');
+  for (let i = 0; i < entryLiList.length; i++) {
+    entryLiList[i].className = '';
   }
   $searchForm.reset();
   $clearSearchBtn.className = 'hidden';
