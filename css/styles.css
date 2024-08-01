@@ -58,6 +58,7 @@ button {
   background-color: #4b2476;
   color: white;
   border-radius: 5px;
+  border-color: transparent;
 }
 
 button:hover {
@@ -107,9 +108,50 @@ img {
 
 #delete-entry-btn {
   background-color: transparent;
-  border-color: transparent;
   color: red;
   text-decoration: underline;
   padding: 0;
   width: 80px;
+}
+
+#delete-entry-dialog {
+  width: 500px;
+  height: 200px;
+  border-color: transparent;
+  border-radius: 5px;
+}
+
+::backdrop {
+  background-color: black;
+  opacity: 60%;
+}
+
+#dialog-container {
+  width: 100%;
+  height: 100%;
+}
+
+#delete-entry-dialog h3 {
+  text-align: center;
+}
+
+#delete-entry-dialog button {
+  font-size: 16px;
+  font-weight: 600;
+  height: 35px;
+}
+
+#cancel-delete-btn {
+  width: 90px;
+  background-color: #b6b6b6;
+  color: black;
+}
+
+#confirm-delete-btn {
+  width: 100px;
+  background-color: #dc2625;
+}
+
+#delete-dialog-buttons-div {
+  margin-bottom: 0;
 }

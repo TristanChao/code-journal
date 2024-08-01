@@ -13,6 +13,8 @@ const $entriesViewA = document.querySelector('#entries-view-a');
 const $newEntryA = document.querySelector('#new-entry-a');
 const $entryFormHeader = document.querySelector('#entry-form-header');
 const $deleteEntryBtn = document.querySelector('#delete-entry-btn');
+const $deleteEntryDialog = document.querySelector('#delete-entry-dialog');
+const $cancelDeleteBtn = document.querySelector('#cancel-delete-btn');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -26,6 +28,8 @@ if (!$entriesViewA) throw new Error('$entriesViewA query failed');
 if (!$newEntryA) throw new Error('$newEntryA query failed');
 if (!$entryFormHeader) throw new Error('$entryFormHeader query failed');
 if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
+if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
+if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -165,4 +169,10 @@ $allEntriesUl.addEventListener('click', (event) => {
   $deleteEntryBtn.className = '';
   $entryFormHeader.textContent = 'Edit Entry';
   viewSwap('entry-form');
+});
+$deleteEntryBtn.addEventListener('click', () => {
+  $deleteEntryDialog.showModal();
+});
+$cancelDeleteBtn.addEventListener('click', () => {
+  $deleteEntryDialog.close();
 });

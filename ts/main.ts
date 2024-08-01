@@ -27,6 +27,12 @@ const $entryFormHeader = document.querySelector(
 const $deleteEntryBtn = document.querySelector(
   '#delete-entry-btn',
 ) as HTMLButtonElement;
+const $deleteEntryDialog = document.querySelector(
+  '#delete-entry-dialog',
+) as HTMLDialogElement;
+const $cancelDeleteBtn = document.querySelector(
+  '#cancel-delete-btn',
+) as HTMLButtonElement;
 
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
@@ -41,6 +47,8 @@ if (!$entriesViewA) throw new Error('$entriesViewA query failed');
 if (!$newEntryA) throw new Error('$newEntryA query failed');
 if (!$entryFormHeader) throw new Error('$entryFormHeader query failed');
 if (!$deleteEntryBtn) throw new Error('$deleteEntryBtn query failed');
+if (!$deleteEntryDialog) throw new Error('$deleteEntryDialog query failed');
+if (!$cancelDeleteBtn) throw new Error('$cancelDeleteBtn query failed');
 
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
@@ -210,4 +218,12 @@ $allEntriesUl.addEventListener('click', (event: Event) => {
   $entryFormHeader.textContent = 'Edit Entry';
 
   viewSwap('entry-form');
+});
+
+$deleteEntryBtn.addEventListener('click', () => {
+  $deleteEntryDialog.showModal();
+});
+
+$cancelDeleteBtn.addEventListener('click', () => {
+  $deleteEntryDialog.close();
 });
