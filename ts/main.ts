@@ -233,3 +233,24 @@ $deleteEntryBtn.addEventListener('click', () => {
 $cancelDeleteBtn.addEventListener('click', () => {
   $deleteEntryDialog.close();
 });
+
+$confirmDeleteBtn.addEventListener('click', () => {
+  if (!data.editing) throw new Error('data.editing has no value');
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === data.editing.entryId) {
+      data.entries.splice(i, 1);
+      const $deleteLi = document.querySelector(
+        `li[data-entry-id="${data.editing.entryId}"]`,
+      );
+      if (!$deleteLi) throw new Error('$deleteLi query failed');
+      $deleteLi.remove();
+      break;
+    }
+  }
+
+  toggleNoEntries();
+  $deleteEntryDialog.close();
+  data.editing = null;
+  viewSwap('entries');
+  resetEntryForm();
+});
