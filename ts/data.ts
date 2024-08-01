@@ -6,13 +6,13 @@ interface Entry {
   title: string;
   photoUrl: string;
   notes: string;
-  entryId: number;
+  entryId?: number;
 }
 
 interface DataObject {
   view: string;
   entries: Entry[];
-  editing: null;
+  editing: null | Entry;
   nextEntryId: number;
 }
 

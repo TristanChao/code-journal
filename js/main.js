@@ -11,6 +11,7 @@ const $entryFormDiv = document.querySelector('div[data-view="entry-form"]');
 const $entriesDiv = document.querySelector('div[data-view="entries"]');
 const $entriesViewA = document.querySelector('#entries-view-a');
 const $newEntryA = document.querySelector('#new-entry-a');
+const $entryFormHeader = document.querySelector('#entry-form-header');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -22,6 +23,7 @@ if (!$entryFormDiv) throw new Error('$entryFormDiv query failed');
 if (!$entriesDiv) throw new Error('$entriesDiv query failed');
 if (!$entriesViewA) throw new Error('$entriesViewA query failed');
 if (!$newEntryA) throw new Error('$newEntryA query failed');
+if (!$entryFormHeader) throw new Error('$entryFormHeader query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -38,13 +40,31 @@ $entryForm.addEventListener('submit', (event) => {
     title,
     photoUrl,
     notes,
-    entryId: data.nextEntryId,
   };
-  data.nextEntryId++;
-  data.entries.unshift(entryValues);
+  if (data.editing === null) {
+    entryValues.entryId = data.nextEntryId;
+    data.nextEntryId++;
+    data.entries.unshift(entryValues);
+    const $newEntry = renderEntry(entryValues);
+    $allEntriesUl.prepend($newEntry);
+  } else {
+    entryValues.entryId = data.editing.entryId;
+    for (let i = 0; i < data.entries.length; i++) {
+      if (data.entries[i].entryId === data.editing.entryId) {
+        data.entries[i] = entryValues;
+        break;
+      }
+    }
+    const $editedEntry = renderEntry(entryValues);
+    const $replaceEntry = document.querySelector(
+      `li[data-entry-id="${data.editing.entryId}"]`,
+    );
+    if (!$replaceEntry) throw new Error('$replaceEntry query failed');
+    $replaceEntry.replaceWith($editedEntry);
+    $entryFormHeader.textContent = 'New Entry';
+    data.editing = null;
+  }
   writeData();
-  const $newEntry = renderEntry(entryValues);
-  $allEntriesUl.prepend($newEntry);
   $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
   $entryForm.reset();
   viewSwap('entries');
@@ -52,6 +72,7 @@ $entryForm.addEventListener('submit', (event) => {
 });
 function renderEntry(entry) {
   const $entryLI = document.createElement('li');
+  $entryLI.setAttribute('data-entry-id', String(entry.entryId));
   const $rowDiv = document.createElement('div');
   $rowDiv.className = 'row';
   const $imgDiv = document.createElement('div');
@@ -61,15 +82,21 @@ function renderEntry(entry) {
   $entryImg.setAttribute('alt', 'image of' + entry.title);
   const $textDiv = document.createElement('div');
   $textDiv.className = 'column-half';
+  const $titleDiv = document.createElement('div');
+  $titleDiv.className = 'row justify-sb';
   const $titleH3 = document.createElement('h3');
   $titleH3.textContent = entry.title;
+  const $pencilIcon = document.createElement('i');
+  $pencilIcon.className = 'fa-solid fa-pencil';
   const $notesP = document.createElement('p');
   $notesP.textContent = entry.notes;
   $entryLI.appendChild($rowDiv);
   $rowDiv.appendChild($imgDiv);
   $imgDiv.appendChild($entryImg);
   $rowDiv.appendChild($textDiv);
-  $textDiv.appendChild($titleH3);
+  $textDiv.appendChild($titleDiv);
+  $titleDiv.appendChild($titleH3);
+  $titleDiv.appendChild($pencilIcon);
   $textDiv.appendChild($notesP);
   return $entryLI;
 }
@@ -106,5 +133,28 @@ $entriesViewA.addEventListener('click', () => {
   viewSwap('entries');
 });
 $newEntryA.addEventListener('click', () => {
+  viewSwap('entry-form');
+});
+$allEntriesUl.addEventListener('click', (event) => {
+  const $target = event.target;
+  if (!$target) throw new Error('$target query failed');
+  if (!$target.matches('.fa-pencil')) {
+    return;
+  }
+  const $targetLi = $target.closest('li');
+  if (!$targetLi) throw new Error('$targetLi query failed');
+  const targetLiId = Number($targetLi.getAttribute('data-entry-id'));
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.entries[i].entryId === targetLiId) {
+      data.editing = data.entries[i];
+      break;
+    }
+  }
+  if (!data.editing) throw new Error('data.editing has no value');
+  $titleInput.value = data.editing.title;
+  $photoUrlInput.value = data.editing.photoUrl;
+  $notesTextArea.value = data.editing.notes;
+  $entryImg.setAttribute('src', data.editing.photoUrl);
+  $entryFormHeader.textContent = 'Edit Entry';
   viewSwap('entry-form');
 });
