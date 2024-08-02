@@ -19,6 +19,8 @@ const $confirmDeleteBtn = document.querySelector('#confirm-delete-btn');
 const $searchForm = document.querySelector('#search-form');
 const $searchInput = document.querySelector('#search-input');
 const $clearSearchBtn = document.querySelector('#clear-search-btn');
+const $tagsInput = document.querySelector('#tags-input');
+const $filterBySelect = document.querySelector('#filter-by-select');
 if (!$entryForm) throw new Error('$entryForm query failed');
 if (!$entryImg) throw new Error('$entryImg query failed');
 if (!$titleInput) throw new Error('$titleInput query failed');
@@ -38,6 +40,8 @@ if (!$confirmDeleteBtn) throw new Error('$confirmDeleteBtn query failed');
 if (!$searchForm) throw new Error('$searchForm query failed');
 if (!$searchInput) throw new Error('$searchInput query failed');
 if (!$clearSearchBtn) throw new Error('$clearSearchBtn query failed');
+if (!$tagsInput) throw new Error('$tagsInput query failed');
+if (!$filterBySelect) throw new Error('$filterBySelect query failed');
 $photoUrlInput.addEventListener('input', () => {
   if (!$photoUrlInput.value) {
     $entryImg.setAttribute('src', '/images/placeholder-image-square.jpg');
@@ -50,10 +54,17 @@ $entryForm.addEventListener('submit', (event) => {
   const title = $titleInput.value;
   const photoUrl = $photoUrlInput.value;
   const notes = $notesTextArea.value;
+  let tags;
+  if (!$tagsInput.value) {
+    tags = 'none';
+  } else {
+    tags = $tagsInput.value;
+  }
   const entryValues = {
     title,
     photoUrl,
     notes,
+    tags,
   };
   if (data.editing === null) {
     entryValues.entryId = data.nextEntryId;
@@ -103,6 +114,8 @@ function renderEntry(entry) {
   $pencilIcon.className = 'fa-solid fa-pencil';
   const $notesP = document.createElement('p');
   $notesP.textContent = entry.notes;
+  const $tagsP = document.createElement('p');
+  $tagsP.textContent = 'Tags: ' + entry.tags;
   $entryLI.appendChild($rowDiv);
   $rowDiv.appendChild($imgDiv);
   $imgDiv.appendChild($entryImg);
@@ -111,6 +124,7 @@ function renderEntry(entry) {
   $titleDiv.appendChild($titleH3);
   $titleDiv.appendChild($pencilIcon);
   $textDiv.appendChild($notesP);
+  $textDiv.appendChild($tagsP);
   return $entryLI;
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -175,6 +189,7 @@ $allEntriesUl.addEventListener('click', (event) => {
   if (!data.editing) throw new Error('data.editing has no value');
   $titleInput.value = data.editing.title;
   $photoUrlInput.value = data.editing.photoUrl;
+  $tagsInput.value = data.editing.tags;
   $notesTextArea.value = data.editing.notes;
   $entryImg.setAttribute('src', data.editing.photoUrl);
   $deleteEntryBtn.className = '';
@@ -216,11 +231,30 @@ $searchForm.addEventListener('submit', (event) => {
     '#entries-ul > li[data-entry-id]',
   );
   if (!entryLiList) throw new Error('entryLiList query failed');
+  const filter = $filterBySelect.value;
   for (let i = 0; i < entryLiList.length; i++) {
-    if (!entryLiList[i].textContent?.toLowerCase().includes(searchTerm)) {
-      entryLiList[i].className = 'hidden';
-    } else {
+    const liDataEntry = data.entries.find(
+      (element) =>
+        element.entryId ===
+        Number(entryLiList[i].getAttribute('data-entry-id')),
+    );
+    if (!liDataEntry) throw new Error('liDataEntry has no value');
+    let searchCriteria;
+    if (filter === 'all') {
+      searchCriteria = entryLiList[i].textContent
+        ?.toLowerCase()
+        .includes(searchTerm);
+    } else if (filter === 'title') {
+      searchCriteria = liDataEntry.title.toLowerCase().includes(searchTerm);
+    } else if (filter === 'notes') {
+      searchCriteria = liDataEntry.notes.toLowerCase().includes(searchTerm);
+    } else if (filter === 'tags') {
+      searchCriteria = liDataEntry.tags.toLowerCase().includes(searchTerm);
+    }
+    if (searchCriteria) {
       entryLiList[i].className = '';
+    } else {
+      entryLiList[i].className = 'hidden';
     }
   }
 });

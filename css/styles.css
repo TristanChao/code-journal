@@ -6,6 +6,7 @@ header {
 body {
   background-color: #eee;
   min-width: 235px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 header > .container {
@@ -162,14 +163,24 @@ img {
   height: 35px;
 }
 
+#search-form label {
+  height: 18px;
+  margin: auto 0;
+}
+
+#filter-by-select {
+  border-color: #d1d1d1;
+  border-radius: 5px;
+}
+
 #search-input {
-  width: calc(100% - 45px);
+  width: calc(100% - 165px);
   font-size: 16px;
   padding-left: 8px;
 }
 
 #search-input.with-clear {
-  width: calc(100% - 95px);
+  width: calc(100% - 225px);
 }
 
 #search-btn {
